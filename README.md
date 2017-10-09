@@ -1,6 +1,4 @@
 # NFC-Reader
-Here you can get a basic example for NFC tag reader to read its content, id and payload for android mobile phones.
-
 
 #Place these line in activity in onCreate----------
 
