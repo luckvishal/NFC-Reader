@@ -35,4 +35,70 @@ mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
+	
+	# This function call when any one Tap NFC tag-------------
+
+public void onNewIntent(Intent intent) {
+        HelperTagReader helperTagReader = new HelperTagReader();
+        if(NetworkManager.isInternetConnected(LoginActivity.this)) {
+            if (loginCount == 0) {
+                if ("android.nfc.action.TECH_DISCOVERED".equals(intent.getAction())) {
+                    // HelperTagReader.handleIntent(intent, LoginActivity.this);
+                    loginCount =1;
+                    finalRead();
+
+                } else if ("android.nfc.action.NDEF_DISCOVERED".equals(intent.getAction())) {
+                    loginCount =1;
+                    finalRead();
+
+                } else if ("android.nfc.action.TAG_DISCOVERED".equals(intent.getAction())) {
+                    loginCount =1;
+                    finalRead();
+
+                }
+            } else
+                return;
+        }
+        else if(networkPopupDisplayed){
+            networkPopupDisplayed = false;
+            showInternetSettingsAlert(LoginActivity.this);
+        }
+    }
+
+
+
+# And call this method from Reader button or Activity-------
+
+finalRead(){
+ Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+        NdefMessage[] msgs;
+
+        byte[] mimeBytes = "application/com.android.cts.verifier.nfc"
+                .getBytes(Charset.forName("US-ASCII"));
+        //byte[] id = new byte[] {1, 3, 3, 7};
+        //byte[] payload = "CTS Verifier NDEF Push Tag".getBytes(Charset.forName("US-ASCII"));
+
+        byte[] empty = new byte[0];
+        byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+        Parcelable tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        byte[] payload = dumpTagData(tag).getBytes(Charset.forName("US-ASCII"));
+
+        NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
+        NdefMessage msg = new NdefMessage(new NdefRecord[] { record });
+        msgs = new NdefMessage[] { msg };
+        tid = msgs[0].getRecords()[0].toString().split("id=")[1].split(" payload=")[0];
+        pid= msgs[0].getRecords()[0].toString().split("id=")[1].split(" payload=")[1];
+
+        if (rawMsgs != null) {
+            msgs = new NdefMessage[rawMsgs.length];
+            for (int i = 0; i < rawMsgs.length; i++) {
+                msgs[i] = (NdefMessage) rawMsgs[i];
+            }
+
+        } else {
+            // Unknown tag type
+
+        }
+        
+        }
 		
