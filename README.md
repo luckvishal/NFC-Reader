@@ -1,7 +1,7 @@
 # NFC-Reader
 Follow the follwing steps to read nfc chip.
 
-#Place these line in activity in onCreate----------
+# Place these line in activity in onCreate----------
 
 mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
