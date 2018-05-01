@@ -34,3 +34,4 @@ mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
+		
