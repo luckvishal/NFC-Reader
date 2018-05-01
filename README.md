@@ -3,7 +3,7 @@ Follow the follwing steps to read nfc chip.
 
 # Place these line in activity in onCreate----------
 
-mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+	mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
             Toast.makeText(this, "Your device doesn't support NFC", Toast.LENGTH_SHORT).show();
             finish();
@@ -36,9 +36,9 @@ mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
             throw new RuntimeException("fail", e);
         }
 	
-	# This function call when any one Tap NFC tag-------------
+# This function call when any one Tap NFC tag-------------
 
-public void onNewIntent(Intent intent) {
+	public void onNewIntent(Intent intent) {
         HelperTagReader helperTagReader = new HelperTagReader();
         if(NetworkManager.isInternetConnected(LoginActivity.this)) {
             if (loginCount == 0) {
@@ -69,8 +69,8 @@ public void onNewIntent(Intent intent) {
 
 # And call this method from Reader button or Activity-------
 
-finalRead(){
- Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+	finalRead(){
+ 	Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         NdefMessage[] msgs;
 
         byte[] mimeBytes = "application/com.android.cts.verifier.nfc"
